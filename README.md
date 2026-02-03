@@ -14,10 +14,10 @@ diabetes-fast-api/
 
 ### 1. Instalar dependencias
 
-Copia `.env.example` a `.env` y configura tus credenciales:
+Copia `.env` a `.env` y configura tus credenciales:
 
 ```bash
-cp .env.example .env
+cp .env .env
 ```
 
 Edita `.env`:
