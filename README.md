@@ -24,7 +24,6 @@ Edita `.env`:
 
 ```env
 DAGSHUB_USERNAME=tu_usuario
-DAGSHUB_TOKEN=tu_token
 DAGSHUB_REPO=owner/repo
 MLFLOW_TRACKING_URI=https://dagshub.com/owner/repo.mlflow
 MODEL_NAME=diabetes-model
@@ -77,7 +76,7 @@ curl -X POST "http://localhost:8000/api/predict" \
 }
 ```
 
-## 📊 Datos de Entrada
+##  Datos de Entrada
 
 | Campo | Descripción |
 |-------|-------------|
@@ -90,7 +89,7 @@ curl -X POST "http://localhost:8000/api/predict" \
 | `diabetes_pedigree_function` | Función de pedigrí de diabetes |
 | `age` | Edad (años) |
 
-## 🔑 Obtener Credenciales de DagshHub
+## Obtener Credenciales de DagshHub
 
 1. Ve a [DagshHub](https://dagshub.com)
 2. Crea una cuenta o inicia sesión
@@ -98,14 +97,14 @@ curl -X POST "http://localhost:8000/api/predict" \
 4. Crea un token nuevo
 5. Copia el token y tu username al `.env`
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **FastAPI**: Framework web
 - **MLflow**: Gestión de modelos
 - **DagshHub**: Almacenamiento de modelos
 - **Pydantic**: Validación de datos
 
-## 📝 Notas
+## Notas
 
 - El modelo se carga automáticamente al iniciar
 - Usa el stage "Production" del modelo en MLflow
