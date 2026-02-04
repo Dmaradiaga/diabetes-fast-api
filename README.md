@@ -1,111 +1,86 @@
-# API de Predicción de Diabetes
+# API de Prediccion de Diabetes
 
-API simple con FastAPI que carga un modelo de ML desde DagshHub para predecir diabetes.
+Esta es una aplicacion sencilla creada con FastAPI que utiliza un modelo de inteligencia artificial para predecir si una persona podria tener diabetes. El modelo se carga de forma automatica desde DagshHub.
 
-## Estructura del Proyecto
+## Requisitos Previos
 
-```
-diabetes-fast-api/
-├── app/
-│   ├── __init__.py
-│   ├── main.py              # Aplicación FastAPI
+Antes de comenzar, necesitas tener instalado:
+- Python 3.10 o superior.
+- Una cuenta en DagshHub.
 
-## Instalación Rápida
+## Configuracion
 
-### 1. Instalar dependencias
-
-Copia `.env` a `.env` y configura tus credenciales:
-
-```bash
-cp .env .env
-```
-
-Edita `.env`:
+1. Crea un archivo llamado .env en la carpeta principal del proyecto.
+2. Copia y pega el siguiente contenido en el archivo .env y completa con tus datos de DagshHub:
 
 ```env
 DAGSHUB_USERNAME=tu_usuario
-DAGSHUB_REPO=owner/repo
-MLFLOW_TRACKING_URI=https://dagshub.com/owner/repo.mlflow
+DAGSHUB_REPO_NAME=tu_repositorio
+MLFLOW_TRACKING_URI=https://dagshub.com/tu_usuario/tu_repositorio.mlflow
 MODEL_NAME=diabetes-model
 ```
 
-### 3. Ejecutar
+## Instalacion
+
+1. Abre una terminal en la carpeta del proyecto.
+2. Instala todas las librerias necesarias con el siguiente comando:
+
+pip install -r requirements.txt
+
+## Como ejecutar la API
+
+Para iniciar el servidor, ejecuta el siguiente comando:
 
 ```bash
-
-La API estará en: `http://localhost:8000`
-
-## Documentación
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-
-GET /api/health
+python -m app.main
 ```
 
-### Predicción
+Una vez ejecutado, la API estara disponible en: http://localhost:8000
 
-```bash
-POST /api/predict
-```
+## Como probar la API
 
-**Ejemplo:**
+### 1. Documentacion interactiva
+Puedes ver y probar todos los servicios de la API desde tu navegador en:
+http://localhost:8000/docs
 
-```bash
-curl -X POST "http://localhost:8000/api/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "pregnancies": 6,
-    "glucose": 148,
-    "blood_pressure": 72,
-    "skin_thickness": 35,
-    "insulin": 0,
-    "bmi": 33.6,
-    "diabetes_pedigree_function": 0.627,
-    "age": 50
-  }'
-```
+### 2. Verificar estado
+Puedes revisar si la API y el modelo estan funcionando correctamente en:
+http://localhost:8000/api/health
 
-**Respuesta:**
+### 3. Realizar una prediccion
+Para obtener una prediccion, debes enviar una solicitud de tipo POST a la ruta:
+http://localhost:8000/api/predict
+
+Ejemplo de datos que debes enviar (en formato JSON):
 
 ```json
 {
-  "prediction": 1,
-  "message": "Diabetes"
+  "pregnancies": 6,
+  "glucose": 148,
+  "blood_pressure": 72,
+  "skin_thickness": 35,
+  "insulin": 0,
+  "bmi": 33.6,
+  "diabetes_pedigree_function": 0.627,
+  "age": 50
 }
 ```
 
-##  Datos de Entrada
+## Datos necesarios para la prediccion
 
-| Campo | Descripción |
-|-------|-------------|
-| `pregnancies` | Número de embarazos |
-| `glucose` | Glucosa en plasma |
-| `blood_pressure` | Presión arterial (mm Hg) |
-| `skin_thickness` | Grosor de la piel (mm) |
-| `insulin` | Insulina (mu U/ml) |
-| `bmi` | Índice de masa corporal |
-| `diabetes_pedigree_function` | Función de pedigrí de diabetes |
-| `age` | Edad (años) |
+- pregnancies: Numero de embarazos.
+- glucose: Nivel de glucosa en la sangre.
+- blood_pressure: Presion arterial.
+- skin_thickness: Grosor de la piel.
+- insulin: Nivel de insulina.
+- bmi: Indice de masa corporal.
+- diabetes_pedigree_function: Funcion de herencia de diabetes.
+- age: Edad del paciente.
 
-## Obtener Credenciales de DagshHub
+## Estructura del proyecto
 
-1. Ve a [DagshHub](https://dagshub.com)
-2. Crea una cuenta o inicia sesión
-3. Ve a **Settings** → **Tokens**
-4. Crea un token nuevo
-5. Copia el token y tu username al `.env`
-
-## Tecnologías
-
-- **FastAPI**: Framework web
-- **MLflow**: Gestión de modelos
-- **DagshHub**: Almacenamiento de modelos
-- **Pydantic**: Validación de datos
-
-## Notas
-
-- El modelo se carga automáticamente al iniciar
-- Usa el stage "Production" del modelo en MLflow
-- Todos los endpoints están documentados en `/docs`
+- app/main.py: Punto de inicio de la aplicacion.
+- app/api/: Definicion de las rutas o servicios.
+- app/services/: Logica para cargar el modelo y realizar predicciones.
+- app/models/: Definicion de como deben lucir los datos de entrada.
+- requirements.txt: Lista de librerias necesarias.
