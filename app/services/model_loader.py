@@ -14,7 +14,12 @@ model = None
 
 
 def setup_dagshub():
-    """Configuracion las credenciales de DagshHub."""
+    """Configuración las credenciales de DagshHub."""
+    token = os.getenv("DAGSHUB_TOKEN")
+    if token:
+        import dagshub.auth
+        dagshub.auth.add_app_token(token)
+        
     dagshub.init(repo_owner=config.DAGSHUB_USERNAME, repo_name=config.DAGSHUB_REPO_NAME, mlflow=True)
     logger.info(f"DagshHub configurado: {config.MLFLOW_TRACKING_URI}")
 
