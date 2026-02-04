@@ -1,13 +1,18 @@
-fastapi==0.104.1
-uvicorn==0.24.0.post1
-pydantic==2.5.2
-python-dotenv==1.0.0
-gunicorn==21.2.0
-dagshub==0.3.16
-mlflow==3.1.4
-cloudpickle==3.1.2
-numpy==2.0.2
+# Librerías Core
+fastapi==0.128.0
+uvicorn==0.39.0
+pydantic==2.12.5
+python-dotenv==1.2.1
+
+# Ciencia de Datos y Modelo
 pandas==2.3.3
 scikit-learn==1.6.1
 scipy==1.13.1
-psutil==7.2.1
+numpy==2.0.2
+
+# MLflow y DagshHub
+mlflow==3.1.4
+dagshub==0.6.5
+
+# Servidor de Producción
+gunicorn==23.0.0
