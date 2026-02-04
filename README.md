@@ -16,6 +16,7 @@ Antes de comenzar, necesitas tener instalado:
 ```env
 DAGSHUB_USERNAME=tu_usuario
 DAGSHUB_REPO_NAME=tu_repositorio
+DAGSHUB_TOKEN=tu_token
 MLFLOW_TRACKING_URI=https://dagshub.com/tu_usuario/tu_repositorio.mlflow
 MODEL_NAME=diabetes-model
 ```
@@ -77,6 +78,20 @@ Ejemplo de datos que debes enviar (en formato JSON):
 - diabetes_pedigree_function: Funcion de herencia de diabetes.
 - age: Edad del paciente.
 
+## Ejecucion con Docker
+
+Si prefieres usar Docker, sigue estos pasos:
+
+1. **Construir la imagen**:
+   ```bash
+   docker build -t diabetes-fast-api .
+   ```
+
+2. **Correr el contenedor**:
+   ```bash
+   docker run -p 8000:8000 --env-file .env diabetes-fast-api
+   ```
+
 ## Estructura del proyecto
 
 - app/main.py: Punto de inicio de la aplicacion.
@@ -84,3 +99,4 @@ Ejemplo de datos que debes enviar (en formato JSON):
 - app/services/: Logica para cargar el modelo y realizar predicciones.
 - app/models/: Definicion de como deben lucir los datos de entrada.
 - requirements.txt: Lista de librerias necesarias.
+- Dockerfile: Configuracion para crear la imagen de Docker.
