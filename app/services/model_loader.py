@@ -17,8 +17,8 @@ def setup_dagshub():
     """Configuración las credenciales de DagshHub."""
     token = os.getenv("DAGSHUB_TOKEN")
     if token:
-        import dagshub.auth
-        dagshub.auth.add_app_token(token)
+        # Usar la variable de entorno que dagshub y mlflow reconocen
+        os.environ["DAGSHUB_API_TOKEN"] = token
         
     dagshub.init(repo_owner=config.DAGSHUB_USERNAME, repo_name=config.DAGSHUB_REPO_NAME, mlflow=True)
     logger.info(f"DagshHub configurado: {config.MLFLOW_TRACKING_URI}")
@@ -38,7 +38,8 @@ def load_model():
         return True
         
     except Exception as e:
-        logger.error(f"Error al cargar modelo: {e}")
+        # Usar repr(e) para evitar fallos en __str__ de algunas excepciones de dagshub
+        logger.error(f"Error al cargar modelo: {repr(e)}")
         logger.error(f"Verifica que el modelo '{config.MODEL_NAME}' esté en stage 'Staging'")
         logger.error(f"URL: https://dagshub.com/{config.DAGSHUB_USERNAME}/{config.DAGSHUB_REPO_NAME}/models")
         return False
