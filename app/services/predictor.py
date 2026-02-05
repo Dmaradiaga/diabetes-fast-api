@@ -20,7 +20,7 @@ def predict(input_data: DiabetesInput) -> dict:
         dict con la predicción
     """
     try:
-        # Usar un diccionario de listas para satisfacer el esquema del modelo sin pandas
+        # Usar un diccionario de listas para  el esquema del modelo sin pandas
         data = {
             'Pregnancies': [float(input_data.pregnancies)],
             'Glucose': [float(input_data.glucose)],

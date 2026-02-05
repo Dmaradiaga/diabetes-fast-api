@@ -38,6 +38,8 @@ python -m app.main
 
 Una vez ejecutado, la API estara disponible en: http://localhost:8000
 
+*Nota: Se ha desactivado el modo automatico de recarga (reload) para asegurar que el modelo se descargue y autentique correctamente desde DagshHub sin errores.*
+
 ## Como probar la API
 
 ### 1. Documentacion interactiva
