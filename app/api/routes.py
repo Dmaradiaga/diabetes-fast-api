@@ -14,10 +14,11 @@ router = APIRouter()
 
 @router.get("/health")
 async def health():
-    """Verifica el estado de la API."""
+    """Verifica el estado de la API y muestra información del modelo."""
     return {
         "status": "ok",
-        "model_loaded": model_loader.model is not None
+        "model_loaded": model_loader.model is not None,
+        "model_metrics": model_loader.get_metrics()
     }
 
 

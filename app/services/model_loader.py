@@ -8,14 +8,16 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 import mlflow
+from mlflow.tracking import MlflowClient
 import logging
 import dagshub
 import dagshub.auth
 
 logger = logging.getLogger(__name__)
 
-# Variable global para almacenar el modelo
+# Variable global para almacenar el modelo y sus métricas
 model = None
+model_metrics = None
 
 
 def setup_dagshub():
@@ -39,8 +41,8 @@ def setup_dagshub():
 
 
 def load_model():
-    """Carga el modelo desde DagshHub/MLflow."""
-    global model
+    """Carga el modelo y sus métricas desde DagshHub/MLflow."""
+    global model, model_metrics
     try:
         setup_dagshub()
         
@@ -52,6 +54,23 @@ def load_model():
         logger.info(f"Intentando cargar: {model_uri}")
         model = mlflow.pyfunc.load_model(model_uri)
         logger.info(f"Modelo cargado exitosamente: {model_uri}")
+        
+        # Cargar métricas
+        try:
+            client = MlflowClient()
+            # Obtener la versión del modelo en Staging
+            latest_versions = client.get_latest_versions(model_name, stages=["Staging"])
+            if latest_versions:
+                run_id = latest_versions[0].run_id
+                run_data = client.get_run(run_id).data
+                model_metrics = run_data.metrics
+                logger.info(f"Métricas del modelo cargadas: {model_metrics}")
+            else:
+                logger.warning(f"No se encontró una versión en 'Staging' para obtener métricas")
+        except Exception as me:
+            logger.error(f"Error al cargar las métricas: {repr(me)}")
+            model_metrics = {"error": "No se pudieron cargar las métricas"}
+
         return True
         
     except Exception as e:
@@ -69,3 +88,8 @@ def get_model():
     if model is None:
         raise RuntimeError("Modelo no cargado")
     return model
+
+
+def get_metrics():
+    """Obtiene las métricas del modelo cargado."""
+    return model_metrics
